@@ -1,0 +1,33 @@
+{
+  "name": "MiniIDE",
+  "version": "1.0.0",
+  "author": "你的名字",
+  "description": "我的MiniIDE应用",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^26.6.10",
+    "electron-builder": "^26.8.1"
+  },
+  "build": {
+    "appId": "com.example.miniide",
+    "productName": "MiniIDE",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico",
+      "forceCodeSigning": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
