@@ -55,25 +55,39 @@ Platform：Windows
 	
 	- JavaScript
 
+	- TypeScript
+
+	- Java
+
+    - C++
+
+	- Go
+
+	- Rust
+
+    - Ruby
+
+	- PHP
+
+	- Kotlin
+
+    - Lua
+
+    - Bash
+
+    - Dart
+
+    - R
+
+	- Swift
+
+	- HTML
+
 未来版本计划支持更多常用编程语言，包括：
 
 	- C
 	
-	- C++
-	
 	- C#
-	
-	- Java
-	
-	- TypeScript
-	
-	- Go
-	
-	- Rust
-	
-	- PHP
-	
-	- HTML
 	
 	- CSS
 	
@@ -84,10 +98,6 @@ Platform：Windows
 	- Shell / Bash
 	
 	- SQL
-	
-	- Kotlin
-	
-	- Swift
 	
 
 CodeEditer 将持续扩展对更多编程语言的支持，以满足不同开发者的需求
