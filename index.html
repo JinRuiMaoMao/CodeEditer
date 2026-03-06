@@ -1,55 +1,45 @@
 <!DOCTYPE html>
-<html lang="cn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CODEEDITER v1.0.3</title>
+    <title>CodeEditer</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
 </head>
 <body>
-<div id="toolbar">
-    <button id="runBtn">Run</button>
-    <select id="pluginSelector">
+<div id="top-bar">
+    <select id="langSelector">
         <option value="auto" selected>自动检测</option>
-        <option value="python">Python</option>
-        <option value="javascript">JavaScript</option>
-        <option value="typescript">TypeScript</option>
-        <option value="java">Java</option>
-        <option value="cpp">C/C++</option>
-        <option value="go">Go</option>
-        <option value="rust">Rust</option>
-        <option value="ruby">Ruby</option>
-        <option value="php">PHP</option>
-        <option value="kotlin">Kotlin</option>
-        <option value="lua">Lua</option>
-        <option value="bash">Bash</option>
-        <option value="dart">Dart</option>
-        <option value="r">R</option>
-        <option value="swift">Swift</option>
-        <option value="html">HTML</option>
+        <option value="Python">Python</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="TypeScript">TypeScript</option>
+        <option value="Java">Java</option>
+        <option value="C/C++">C/C++</option>
+        <option value="Go">Go</option>
+        <option value="Rust">Rust</option>
+        <option value="Ruby">Ruby</option>
+        <option value="PHP">PHP</option>
+        <option value="Kotlin">Kotlin</option>
+        <option value="Lua">Lua</option>
+        <option value="Bash">Bash</option>
+        <option value="Dart">Dart</option>
+        <option value="R">R</option>
+        <option value="Swift">Swift</option>
+        <option value="HTML">HTML</option>
     </select>
-    <span id="currentLang">Python</span>
+    <button id="runBtn">Run</button>
+    <span id="currentLang">自动检测</span>
 </div>
-
-<div id="container">
-    <div id="editor-container">
-        <textarea id="editor">// 写点什么...</textarea>
-        <div id="output"></div>
-    </div>
-    <div id="splitter"></div>
+<div id="editor-minimap-container">
+    <textarea id="editor"></textarea>
     <canvas id="minimap"></canvas>
 </div>
-
-<!-- 初始化覆盖层 -->
-<div id="init-overlay" class="hidden">
-    <div id="init-content">
-        <div id="init-title">正在初始化</div>
-        <div id="init-stage">准备中...</div>
-    </div>
+<div id="output-container">
+    <pre id="output"></pre>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
 <script src="renderer.js"></script>
 </body>
 </html>

@@ -33,8 +33,7 @@ body, html {
 #currentLang {
   margin-left:auto;
   font-weight:bold;
-  color:#569CD6;
-  display: inline; /* 自动模式显示，手动隐藏通过 JS 控制 */
+  color:yellow; /* 默认黄色自动检测 */
 }
 
 /* -------------------- 容器 -------------------- */
@@ -42,27 +41,26 @@ body, html {
   flex:1;
   display:flex;
   overflow:hidden;
-  min-height:0;
 }
 
-/* -------------------- 编辑器 + 输出 -------------------- */
-#editor-container {
+/* -------------------- 左侧面板 (编辑+输出) -------------------- */
+#left-panel {
   flex:1;
   display:flex;
   flex-direction:column;
-  min-width:0;
+  min-width:300px;
   min-height:0;
-  max-width:100%;
+  max-width: calc(100% - 200px); /* 保留最小小地图宽度 */
 }
 
-.CodeMirror {
-  flex:3 !important;
-  height:auto;
+#editor {
+  flex:1;
+  resize:none;
 }
 
 #output {
   flex:1;
-  min-height:100px;
+  min-height:20%;
   max-height:50%;
   background:black;
   color:white;
@@ -72,45 +70,19 @@ body, html {
   box-sizing:border-box;
 }
 
-/* -------------------- MiniMap -------------------- */
-#minimap {
-  width:200px;
-  background:#252526;
+/* -------------------- 分界线 -------------------- */
+#splitter-vertical {
+  width:5px;
+  cursor: ew-resize;
+  background:#444;
   flex-shrink:0;
 }
 
-/* -------------------- 初始化覆盖层 -------------------- */
-#init-overlay {
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.8);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  transition: opacity 0.3s;
-}
-
-#init-overlay.hidden {
-  opacity:0;
-  pointer-events:none;
-}
-
-#init-content {
-  text-align:center;
-  color:white;
-}
-
-#init-title {
-  font-size:36px;
-  font-weight:bold;
-  margin-bottom:10px;
-}
-
-#init-stage {
-  font-size:18px;
-  color:#ccc;
+/* -------------------- MiniMap -------------------- */
+#minimap {
+  width:200px; /* 固定宽度 */
+  background:#252526;
+  flex-shrink:0;
 }
 
 /* -------------------- 滚动条美化 -------------------- */
@@ -118,7 +90,6 @@ body, html {
 .CodeMirror-scroll::-webkit-scrollbar,
 #minimap::-webkit-scrollbar {
   width:8px;
-  height:8px;
 }
 
 #output::-webkit-scrollbar-thumb,
@@ -132,10 +103,4 @@ body, html {
 .CodeMirror-scroll::-webkit-scrollbar-track,
 #minimap::-webkit-scrollbar-track {
   background:#1e1e1e;
-}
-
-/* -------------------- 响应式 -------------------- */
-@media screen and (max-width:600px){
-  #minimap { display:none; }
-  #splitter { display:none; }
 }
