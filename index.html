@@ -1,118 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cn">
 <head>
     <meta charset="UTF-8">
-    <title>Mini IDE - 插件化</title>
+    <title>CODEEDITER v1.0.3</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
-    <style>
-        body, html { margin:0; height:100%; display:flex; flex-direction:column; font-family: monospace; }
-        #toolbar { background:#333; color:white; padding:5px; display:flex; gap:5px; }
-        #container { flex:1; display:flex; overflow:hidden; }
-        #editor-container { flex:1; display:flex; flex-direction:column; position:relative; }
-        #editor { flex:1; }
-        #splitter { width:5px; background:#888; cursor:ew-resize; }
-        #minimap { width:200px; background:#252526; }
-        #output { height:120px; background:black; color:white; overflow:auto; padding:5px; font-family: monospace; }
-    </style>
 </head>
 <body>
-
 <div id="toolbar">
     <button id="runBtn">Run</button>
     <select id="pluginSelector">
-        <option value="js" selected>JavaScript</option>
-        <option value="py">Python</option>
+        <option value="auto" selected>自动检测</option>
+        <option value="python">Python</option>
+        <option value="javascript">JavaScript</option>
+        <option value="typescript">TypeScript</option>
+        <option value="java">Java</option>
+        <option value="cpp">C/C++</option>
+        <option value="go">Go</option>
+        <option value="rust">Rust</option>
+        <option value="ruby">Ruby</option>
+        <option value="php">PHP</option>
+        <option value="kotlin">Kotlin</option>
+        <option value="lua">Lua</option>
+        <option value="bash">Bash</option>
+        <option value="dart">Dart</option>
+        <option value="r">R</option>
+        <option value="swift">Swift</option>
+        <option value="html">HTML</option>
     </select>
+    <span id="currentLang">Python</span>
 </div>
 
 <div id="container">
     <div id="editor-container">
-        <textarea id="editor">// 写点什么......</textarea>
+        <textarea id="editor">// 写点什么...</textarea>
+        <div id="output"></div>
     </div>
     <div id="splitter"></div>
     <canvas id="minimap"></canvas>
 </div>
 
-<div id="output"></div>
+<!-- 初始化覆盖层 -->
+<div id="init-overlay" class="hidden">
+    <div id="init-content">
+        <div id="init-title">正在初始化</div>
+        <div id="init-stage">准备中...</div>
+    </div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
-
-<script>
-    const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
-      lineNumbers: true,
-      mode: "javascript",
-      theme: "default"
-    });
-    const minimap = document.getElementById('minimap');
-    const output = document.getElementById('output');
-    const splitter = document.getElementById('splitter');
-    const editorContainer = document.getElementById('editor-container');
-    const runBtn = document.getElementById('runBtn');
-    const pluginSelector = document.getElementById('pluginSelector');
-
-    // ------------------- 小地图 -------------------
-    function updateMinimap() {
-      const ctx = minimap.getContext('2d');
-      minimap.width = minimap.clientWidth;
-      minimap.height = minimap.clientHeight;
-      ctx.clearRect(0,0,minimap.width,minimap.height);
-      const lines = editor.getValue().split("\n");
-      const lineHeight = 3;
-      ctx.font = "2px monospace";
-      lines.forEach((line, i) => {
-        if(i*lineHeight > minimap.height) return;
-        ctx.fillStyle = "#d4d4d4";
-        ctx.fillText(line.substring(0, Math.floor(minimap.width/4)), 2, i*lineHeight);
-      });
-    }
-    editor.on("change", updateMinimap);
-    updateMinimap();
-
-    // ------------------- 拖拽 splitter -------------------
-    splitter.addEventListener('mousedown', e => {
-      document.onmousemove = e => {
-        const newWidth = e.clientX;
-        editorContainer.style.width = `${newWidth}px`;
-        updateMinimap();
-      }
-      document.onmouseup = () => { document.onmousemove = null; document.onmouseup = null; }
-    });
-
-    // ------------------- 插件化语言 -------------------
-    const loadedPlugins = {
-      js: {
-        run: (code, output) => {
-          try { output.textContent = eval(code); }
-          catch(e) { output.textContent = e; }
-        }
-      },
-      py: {
-        run: (code, output) => {
-          // Node环境下调用Python执行
-          const fs = require("fs");
-          const { exec } = require("child_process");
-          const tmpFile = require("path").join(require("os").tmpdir(), "temp.py");
-          fs.writeFileSync(tmpFile, code);
-          exec(`python "${tmpFile}"`, (err, stdout, stderr) => {
-            output.textContent = stdout + stderr;
-          });
-        }
-      }
-    };
-
-    // ------------------- Run按钮 -------------------
-    runBtn.addEventListener('click', () => {
-      const code = editor.getValue();
-      const lang = pluginSelector.value;
-      const plugin = loadedPlugins[lang];
-      if(!plugin) { output.textContent = `语言未启用: ${lang}`; return; }
-      plugin.run(code, output);
-    });
-
-    // ------------------- 可选：自动更新小地图 -------------------
-    setInterval(updateMinimap, 500);
-</script>
-
+<script src="renderer.js"></script>
 </body>
 </html>
