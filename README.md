@@ -1,4 +1,4 @@
-CodeEditer
+CodeEditer (Only Support Chinese FOR NOW)
 
 一个轻量级的代码编辑器工具，用于快速编写和编辑代码
 
